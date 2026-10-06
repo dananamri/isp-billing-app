@@ -8,6 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::create('tenants', function (Blueprint $table) {
+            $table->ulid('id')->primary();
+            $table->string('nama');
+            $table->string('kode')->unique();
+            $table->string('alamat')->nullable();
+            $table->string('telepon')->nullable();
+            $table->boolean('aktif')->default(true);
+            $table->timestamps();
+        });
+
         Schema::create('packages', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('tenant_id')->constrained()->cascadeOnDelete();
@@ -103,5 +113,6 @@ return new class extends Migration
         Schema::dropIfExists('invoices');
         Schema::dropIfExists('customers');
         Schema::dropIfExists('packages');
+        Schema::dropIfExists('tenants');
     }
 };

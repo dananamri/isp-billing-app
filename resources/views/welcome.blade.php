@@ -11,10 +11,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
             <div class="flex items-center gap-3">
                 <img src="{{ asset('satak.jpeg') }}" alt="Logo SATAK" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-contain shadow-sm border border-slate-100">
-                <div>
-                    <h1 class="text-base sm:text-lg font-black tracking-tight bg-gradient-to-r from-[#00A896] via-[#0066FF] to-[#004BD6] bg-clip-text text-transparent leading-tight">SATAK</h1>
-                    <p class="text-[10px] sm:text-[11px] font-semibold text-slate-400 tracking-wider">KONEK TERUS</p>
-                </div>
             </div>
             <a href="/login" class="w-full sm:w-auto bg-slate-900 text-white px-4 py-2.5 rounded-lg hover:bg-slate-800 transition font-medium text-sm text-center">Masuk Dashboard</a>
         </div>

@@ -14,19 +14,17 @@
             <div class="bg-white rounded-2xl shadow-2xl border border-white/20 p-6 sm:p-8">
                 <div class="flex flex-col items-center mb-6">
                     <img src="{{ asset('satak.jpeg') }}" alt="Logo SATAK" class="w-14 h-14 rounded-2xl object-contain shadow-sm border border-slate-100">
-                    <h1 class="mt-3 text-xl font-black tracking-tight bg-gradient-to-r from-[#00A896] via-[#0066FF] to-[#004BD6] bg-clip-text text-transparent">SATAK</h1>
-                    <p class="text-[11px] font-semibold text-slate-400 tracking-widest">KONEK TERUS</p>
                 </div>
 
                 <div class="flex p-1 bg-slate-100 rounded-full mb-6">
-                    <button type="button" id="tab-admin" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition bg-white shadow text-slate-900">Admin</button>
-                    <button type="button" id="tab-pelanggan" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition text-slate-500">Pelanggan</button>
+                    <button type="button" id="tab-pelanggan" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition bg-white shadow text-slate-900">Pelanggan</button>
+                    <button type="button" id="tab-admin" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition text-slate-500">Admin</button>
                 </div>
 
                 <div class="bg-gradient-to-r from-[#00D2B4] via-[#0066FF] to-[#0052FF] p-[1.5px] rounded-xl mb-6">
                     <div class="bg-white rounded-[10px] px-4 py-3">
-                        <h2 id="head-title" class="text-sm font-bold text-slate-900">Masuk sebagai Admin</h2>
-                        <p id="head-desc" class="text-xs text-slate-500">Kelola pelanggan, tagihan & laporan</p>
+                        <h2 id="head-title" class="text-sm font-bold text-slate-900">Masuk sebagai Pelanggan</h2>
+                        <p id="head-desc" class="text-xs text-slate-500">Lihat tagihan & riwayat pembayaran</p>
                     </div>
                 </div>
 
@@ -36,14 +34,14 @@
 
                 <form method="POST" action="/login" class="space-y-4" id="login-form">
                     @csrf
-                    <input type="hidden" name="role" id="role-input" value="admin">
+                    <input type="hidden" name="role" id="role-input" value="pelanggan">
                     <div>
-                        <label class="block text-[11px] font-bold tracking-wider text-slate-600 mb-2">EMAIL / USERNAME</label>
+                        <label id="login-label" class="block text-[11px] font-bold tracking-wider text-slate-600 mb-2">NOMOR HP / EMAIL</label>
                         <div class="relative">
                             <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
                                 <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/></svg>
                             </span>
-                            <input id="email-input" type="email" name="email" value="{{ old('email') }}" placeholder="admin@satak.net" required class="w-full pl-10 pr-4 py-3 text-sm border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 placeholder-slate-400">
+                            <input id="login-input" type="text" name="phone" value="{{ old('phone', old('username', old('email'))) }}" placeholder="08xxxxxxxxxx atau email" required class="w-full pl-10 pr-4 py-3 text-sm border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 placeholder-slate-400">
                         </div>
                     </div>
                     <div>
@@ -77,7 +75,8 @@
         const roleInput=document.getElementById('role-input');
         const headTitle=document.getElementById('head-title');
         const headDesc=document.getElementById('head-desc');
-        const emailInput=document.getElementById('email-input');
+        const loginLabel=document.getElementById('login-label');
+        const loginInput=document.getElementById('login-input');
         function setRole(r){
             roleInput.value=r;
             if(r==='admin'){
@@ -85,13 +84,17 @@
                 tabPel.className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition text-slate-500';
                 headTitle.textContent='Masuk sebagai Admin';
                 headDesc.textContent='Kelola pelanggan, tagihan & laporan';
-                emailInput.placeholder='admin@satak.net';
+                loginLabel.textContent='USERNAME / EMAIL';
+                loginInput.name='username';
+                loginInput.placeholder='admin@satak.net / username';
             } else {
                 tabPel.className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition bg-white shadow text-slate-900';
                 tabAdmin.className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition text-slate-500';
                 headTitle.textContent='Masuk sebagai Pelanggan';
                 headDesc.textContent='Lihat tagihan & riwayat pembayaran';
-                emailInput.placeholder='pelanggan@email.com';
+                loginLabel.textContent='NOMOR HP / EMAIL';
+                loginInput.name='phone';
+                loginInput.placeholder='08xxxxxxxxxx atau email';
             }
         }
         tabAdmin.addEventListener('click',()=>setRole('admin'));
