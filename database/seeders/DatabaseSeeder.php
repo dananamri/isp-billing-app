@@ -28,13 +28,40 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        // User Admin
-        User::create([
+        // User Admin Permanen
+        $admin = User::create([
             'tenant_id' => $tenant->id,
-            'name' => 'Administrator',
-            'email' => 'admin@netisp.id',
-            'password' => Hash::make('admin123'),
+            'name' => 'adminSaaS',
+            'email' => 'adminSaaS@satak.local',
+            'phone' => '080000000000',
+            'password' => Hash::make('adminSaaS26'),
+            'is_active' => true,
         ]);
+
+        // Setup RBAC & Berikan Hak Akses Penuh ke adminSaaS
+        $permission = \App\Models\Permission::firstOrCreate(
+            ['slug' => 'dashboard.view'],
+            [
+                'name' => 'Lihat Dashboard',
+                'permission_group' => 'dashboard',
+                'description' => 'Izin untuk mengakses dashboard admin',
+            ]
+        );
+
+        $roleAdmin = \App\Models\Role::firstOrCreate(
+            ['tenant_id' => $tenant->id, 'slug' => 'super-admin'],
+            [
+                'name' => 'Super Administrator',
+                'description' => 'Akses penuh ke seluruh sistem',
+            ]
+        );
+
+        app(TenantContext::class)->run($tenant->id, function () use ($roleAdmin, $permission, $admin, $tenant) {
+            $roleAdmin->permissions()->syncWithoutDetaching([
+                $permission->id => ['tenant_id' => $tenant->id],
+            ]);
+            $admin->assignRole($roleAdmin);
+        });
 
         // User biasa
         User::create([
