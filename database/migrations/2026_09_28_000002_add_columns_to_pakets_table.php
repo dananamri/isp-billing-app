@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pakets', function (Blueprint $table) {
-            $table->foreignId('tenant_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUlid('tenant_id')->nullable()->constrained('tenants')->nullOnDelete();
             $table->string('nama_paket');
             $table->string('kecepatan', 50)->nullable();
             $table->integer('harga')->default(0);

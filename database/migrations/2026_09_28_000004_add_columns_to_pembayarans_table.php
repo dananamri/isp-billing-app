@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pembayarans', function (Blueprint $table) {
-            $table->foreignId('tenant_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('tagihan_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('pelanggan_id')->constrained()->cascadeOnDelete();
+            $table->foreignUlid('tenant_id')->nullable()->constrained('tenants')->nullOnDelete();
+            $table->foreignId('tagihan_id')->constrained('tagihans')->cascadeOnDelete();
+            $table->foreignId('pelanggan_id')->constrained('pelanggans')->cascadeOnDelete();
             $table->integer('jumlah')->default(0);
             $table->date('tanggal_bayar');
             $table->string('metode_pembayaran', 50)->default('tunai');

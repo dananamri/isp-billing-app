@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('tenant_id')
-            ->nullable()
-            ->after('id')
-            ->constrained('tenants')
-            ->nullOnDelete();
-        });
+        if (!Schema::hasColumn('users', 'tenant_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->foreignUlid('tenant_id')
+                    ->nullable()
+                    ->after('id')
+                    ->constrained('tenants')
+                    ->nullOnDelete();
+            });
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ class Pelanggan extends Model
 
     protected $fillable = [
         'tenant_id',
+        'user_id',
         'nama',
         'telepon',
         'email',
@@ -27,6 +28,11 @@ class Pelanggan extends Model
     protected $casts = [
         'tanggal_aktif' => 'date',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function paket(): BelongsTo
     {

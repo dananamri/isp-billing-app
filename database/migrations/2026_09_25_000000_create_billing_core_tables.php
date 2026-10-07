@@ -8,15 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->string('nama');
-            $table->string('kode')->unique();
-            $table->string('alamat')->nullable();
-            $table->string('telepon')->nullable();
-            $table->boolean('aktif')->default(true);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tenants')) {
+            Schema::create('tenants', function (Blueprint $table) {
+                $table->ulid('id')->primary();
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->string('email')->nullable();
+                $table->string('phone', 30)->nullable();
+                $table->text('address')->nullable();
+                $table->string('timezone', 64)->default('Asia/Jakarta');
+                $table->boolean('is_active')->default(true);
+                $table->timestamps();
+            });
+        }
 
         Schema::create('packages', function (Blueprint $table) {
             $table->ulid('id')->primary();

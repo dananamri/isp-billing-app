@@ -20,11 +20,12 @@ class DatabaseSeeder extends Seeder
     {
         // Buat Tenant utama
         $tenant = Tenant::create([
-            'nama' => 'NetISP Indonesia',
-            'kode' => 'NETISP',
-            'alamat' => 'Jl. Teknologi No. 88, Jakarta Selatan',
-            'telepon' => '021-77889900',
-            'aktif' => true,
+            'name' => 'NetISP Indonesia',
+            'slug' => 'netisp',
+            'address' => 'Jl. Teknologi No. 88, Jakarta Selatan',
+            'phone' => '021-77889900',
+            'email' => 'info@netisp.id',
+            'is_active' => true,
         ]);
 
         // User Admin

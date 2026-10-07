@@ -9,12 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pelanggans', function (Blueprint $table) {
-            $table->foreignId('tenant_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUlid('tenant_id')->nullable()->constrained('tenants')->nullOnDelete();
+            $table->foreignUlid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('nama');
             $table->string('telepon', 20)->nullable();
             $table->string('email')->nullable();
             $table->text('alamat')->nullable();
-            $table->foreignId('paket_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('paket_id')->nullable()->constrained('pakets')->nullOnDelete();
             $table->enum('status', ['aktif', 'nonaktif', 'menunggu'])->default('aktif');
             $table->date('tanggal_aktif')->nullable();
         });
