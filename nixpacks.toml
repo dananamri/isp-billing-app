@@ -1,7 +1,7 @@
 # Nixpacks config for Laravel 12 + Livewire + Tailwind CSS v4
 
 [variables]
-NIXPACKS_NODE_VERSION = "20"
+NIXPACKS_NODE_VERSION = "22"
 NIXPACKS_PHP_ROOT_DIR = "/public"
 
 [phases.setup]
@@ -16,7 +16,7 @@ nixPkgs = [
   "php82Extensions.gd",
   "php82Extensions.intl",
   "php82Packages.composer",
-  "nodejs_20",
+  "nodejs_22",
   "nginx"
 ]
 
@@ -24,7 +24,7 @@ nixPkgs = [
 cmds = [
   "mkdir -p /var/log/nginx /var/cache/nginx /app/storage/framework/cache /app/storage/framework/sessions /app/storage/framework/views /app/storage/logs",
   "composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader",
-  "npm ci"
+  "npm ci --include=dev"
 ]
 
 [phases.build]
